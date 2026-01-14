@@ -150,4 +150,4 @@ while True:
     fill(pole, items, 40)
 
     user = UserHod()
-    user.user(pole, item_counter)
+    user.user(pole, item_counter, player)
