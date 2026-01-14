@@ -138,6 +138,7 @@ def fill(board, itemlist, fillprosent):
                 board.mss[rand_i][rand_j] = random.choice(itemlist)
                 break
 
+player = Player(skin='*')
 
 while True:
     # intro_cat()
