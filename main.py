@@ -136,6 +136,7 @@ def fill(board, itemlist, fillprosent):
             rand_j = random.randint(0, 9)
             if board.mss[rand_i][rand_j] == '[_]':
                 board.mss[rand_i][rand_j] = random.choice(itemlist)
+                break
 
 
 while True:
