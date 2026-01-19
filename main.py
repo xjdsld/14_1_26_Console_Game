@@ -187,6 +187,15 @@ def hello():
     print('2 - Load Game')
     print('3 - Exit')
 
+def open_table():
+    with open('table.txt', 'r') as f:
+        content = f.read()
+        print(content)
+user_table = input('&7/.?:  ')
+if user_table == '1':
+    open_table()
+
+
 player = Player(skin='*')
 
 hello()
