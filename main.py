@@ -21,7 +21,7 @@ def intro_cat():
     with open("cat.txt", 'r') as file:
         cat_image = file.read()
         print(cat_image)
-        
+
 class ItemSum:
     def __init__(self):
         self.mss_c = []
@@ -191,7 +191,7 @@ def open_table():
     with open('table.txt', 'r') as f:
         content = f.read()
         print(content)
-user_table = input('&7/.?:  ')
+user_table = input('Enter «1» to open the records table, any other symbol to skip:  ')
 if user_table == '1':
     open_table()
 
@@ -211,7 +211,7 @@ else:
     print('Bye')
 
 while True:
-    # intro_cat()
+    intro_cat()
 
     pole = Pole()
     item_counter = ItemSum()
@@ -220,7 +220,7 @@ while True:
     fill(pole, items, 40)
 
     user = UserHod()
-    user.user(pole, item_counter, player)
+    user.user(pole, item_counter)
     while True:
         timer = GameTimer()
         timer.start()
