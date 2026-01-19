@@ -1,4 +1,5 @@
 import random
+import time
 
 class Pole:
     def __init__(self):
@@ -137,8 +138,68 @@ def fill(board, itemlist, fillprosent):
             if board.mss[rand_i][rand_j] == '[_]':
                 board.mss[rand_i][rand_j] = random.choice(itemlist)
                 break
+class GameTimer:
+    def __init__(self):
+        self.start_time = None
+        self.end_time = None
+    def start(self):
+        self.start_time = time.time()
+    def stop(self):
+        self.end_time = time.time()
+    def get_time(self):
+        if self.start_time is None:
+            return 0
+        if self.end_time is None:
+            return time.time() - self.start_time
+        return self.end_time - self.start_time
+
+class UseGame:
+    def save_game(self, mss, player_pos, inventory, play_time):
+        with open('save.txt', 'w') as f:
+            f.write('10 10\n')
+            for row in mss:
+                f.write(' '.join(row) + '\n')
+            f.write(f'{player_pos[0]} {player_pos[1]}\n')
+            f.write(f"{inventory['C']} {inventory['A']} {inventory['D']} {inventory['H']}\n")
+            f.write(str(play_time) + '\n')
+        print('Game saved')
+    def load_game(self):
+        try:
+            with open('save.txt', 'r') as f:
+                lines = f.readlines()
+            field = []
+            for i in range(1, 11):
+                field.append(lines[i].strip().split())
+            player_pos = list(map(int, lines[11].split()))
+            inv = list(map(int, lines[12].split()))
+            inventory = {'C': inv[0], 'A': inv[1], 'D': inv[2], 'H': inv[3]}
+            play_time = int(lines[13])
+            print('Game loaded')
+            return field, player_pos, inventory, play_time
+        except FileNotFoundError:
+            print('Save not found')
+            return None
+def hello():
+    print('======================')
+    print('   Start game')
+    print('======================')
+    print('1 - New Game')
+    print('2 - Load Game')
+    print('3 - Exit')
 
 player = Player(skin='*')
+
+hello()
+choice = input('Choose: ')
+g = UseGame()
+if choice == '1':
+    print('New game started')
+elif choice == '2':
+    data = g.load_game()
+    if data:
+        mss, player_pos, inventory, play_time = data
+else:
+    print('Bye')
 
 while True:
     # intro_cat()
@@ -151,3 +212,13 @@ while True:
 
     user = UserHod()
     user.user(pole, item_counter, player)
+    while True:
+        timer = GameTimer()
+        timer.start()
+        move = input('user:  ')
+        if move == 'q':
+            timer.stop()
+            print('You played:', int(timer.get_time()), 'seconds')
+            break
+    timer = GameTimer()
+    timer.start()
